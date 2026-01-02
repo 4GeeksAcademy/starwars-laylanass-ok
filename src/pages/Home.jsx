@@ -1,16 +1,18 @@
-import rigoImageUrl from "../assets/img/rigo-baby.jpg";
-import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+
+import useGlobalReducer from "../hooks/useGlobalReducer"
 
 export const Home = () => {
 
-  const {store, dispatch} =useGlobalReducer()
+  const {store, dispatch} = useGlobalReducer()
 
-	return (
-		<div className="text-center mt-5">
-			<h1>Hello Rigo!!</h1>
-			<p>
-				<img src={rigoImageUrl} />
-			</p>
-		</div>
-	);
-}; 
+  return (
+    <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '80vh' }}>
+      <img 
+        src="https://i.blogs.es/a1aa54/star/1366_2000.jpg" 
+        alt="Star Wars"
+        className="img-fluid"
+        style={{ maxWidth: '90%', height: 'auto' }}
+      />
+    </div>
+  )
+}
