@@ -7,6 +7,7 @@ export const Planets = () => {
   const navigate = useNavigate()
   const { store, dispatch } = useGlobalReducer()
   const [planets, setPlanets] = useState([])
+  const [imageErrors, setImageErrors] = useState({});
 
   const handleDetails = (planeta) => {
     dispatch({
@@ -31,6 +32,10 @@ export const Planets = () => {
       })
     }
   }
+
+  const handleImageError = (uid) => {
+    setImageErrors(prev => ({...prev, [uid]: true}));
+  };
 
   const getPlanets = async () => {
     const guardados = localStorage.getItem("planets")
@@ -66,8 +71,12 @@ export const Planets = () => {
             <div className="card border-dark rounded my-3 mx-2 text-bg-dark">
               <img
                 className="card-img-top"
-                src={`https://raw.githubusercontent.com/tbone849/star-wars-guide/master/build/assets/img/planets/${item.uid}.jpg`}
+                src={imageErrors[item.uid] 
+                  ? "https://upload.wikimedia.org/wikipedia/commons/d/da/Imagen_no_disponible.svg"
+                  : `https://raw.githubusercontent.com/tbone849/star-wars-guide/master/build/assets/img/planets/${item.uid}.jpg`
+                }
                 alt={item.name}
+                onError={() => handleImageError(item.uid)}
               />
 
               <div className="card-body">

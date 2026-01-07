@@ -4,6 +4,11 @@ import useGlobalReducer from "../hooks/useGlobalReducer";
 export const StarshipDetails = () => {
   const { store } = useGlobalReducer();
   const [details, setDetails] = useState(null);
+  const [imageError, setImageError] = useState(false);
+
+  const handleImageError = () => {
+    setImageError(true);
+  };
 
   const getStarshipDetails = async () => {
     const response = await fetch(store.currentStarship.url);
@@ -31,10 +36,14 @@ export const StarshipDetails = () => {
         <div className="row g-0">
           <div className="col-md-5">
             <img
-              src={`https://raw.githubusercontent.com/tbone849/star-wars-guide/master/build/assets/img/starships/${store.currentStarship.uid}.jpg`}
+              src={imageError 
+                ? "https://upload.wikimedia.org/wikipedia/commons/d/da/Imagen_no_disponible.svg"
+                : `https://raw.githubusercontent.com/tbone849/star-wars-guide/master/build/assets/img/starships/${store.currentStarship.uid}.jpg`
+              }
               alt={store.currentStarship.name}
               className="img-fluid h-100"
               style={{ objectFit: "cover" }}
+              onError={handleImageError}
             />
           </div>
 

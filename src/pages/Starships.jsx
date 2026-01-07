@@ -7,6 +7,7 @@ export const Starships = () => {
   const navigate = useNavigate()
   const { store, dispatch } = useGlobalReducer()
   const [starships, setStarships] = useState([])
+  const [imageErrors, setImageErrors] = useState({});
 
   const handleDetails = (nave) => {
     dispatch({
@@ -31,6 +32,9 @@ export const Starships = () => {
       })
     }
   }
+  const handleImageError = (uid) => {
+    setImageErrors(prev => ({...prev, [uid]: true}));
+  };
 
   const getStarships = async () => {
     const guardadas = localStorage.getItem("starships")
@@ -66,8 +70,12 @@ export const Starships = () => {
             <div className="card border-dark rounded my-3 mx-2 text-bg-dark">
               <img
                 className="card-img-top"
-                src={`https://raw.githubusercontent.com/tbone849/star-wars-guide/master/build/assets/img/starships/${item.uid}.jpg`}
+                src={imageErrors[item.uid] 
+                  ? "https://upload.wikimedia.org/wikipedia/commons/d/da/Imagen_no_disponible.svg"
+                  : `https://raw.githubusercontent.com/tbone849/star-wars-guide/master/build/assets/img/starships/${item.uid}.jpg`
+                }
                 alt={item.name}
+                onError={() => handleImageError(item.uid)}
               />
 
               <div className="card-body">

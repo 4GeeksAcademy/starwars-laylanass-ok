@@ -4,6 +4,11 @@ import useGlobalReducer from "../hooks/useGlobalReducer";
 export const CharacterDetails = () => {
   const { store } = useGlobalReducer();
   const [details, setDetails] = useState(null);
+  const [imageError, setImageError] = useState(false);
+
+  const handleImageError = () => {
+    setImageError(true);
+  };
 
   const getCharacterDetails = async () => {
     const response = await fetch(store.currentCharacter.url);
@@ -30,11 +35,15 @@ export const CharacterDetails = () => {
       <div className="card bg-dark text-white">
         <div className="row g-0">
           <div className="col-md-5">
-            <img
-              src={`https://raw.githubusercontent.com/tbone849/star-wars-guide/master/build/assets/img/characters/${store.currentCharacter.uid}.jpg`}
+           <img
+              src={imageError 
+                ? "https://upload.wikimedia.org/wikipedia/commons/d/da/Imagen_no_disponible.svg"
+                : `https://raw.githubusercontent.com/tbone849/star-wars-guide/master/build/assets/img/characters/${store.currentCharacter.uid}.jpg`
+              }
               alt={store.currentCharacter.name}
               className="img-fluid h-100"
               style={{ objectFit: "cover" }}
+              onError={handleImageError}
             />
           </div>
 

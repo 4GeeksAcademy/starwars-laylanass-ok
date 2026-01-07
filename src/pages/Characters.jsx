@@ -7,6 +7,7 @@ export const Characters = () => {
   const navigate = useNavigate();
   const { store, dispatch } = useGlobalReducer();
   const [characters, setCharacters] = useState([]);
+  const [imageErrors, setImageErrors] = useState({});
 
   const handleDetails = (personajes) => {
     dispatch({
@@ -32,6 +33,9 @@ export const Characters = () => {
     }
   }
 
+  const handleImageError = (uid) => {
+  setImageErrors(prev => ({...prev, [uid]: true}));
+  }
   const getCharacters = async () => {
     const personajes = localStorage.getItem("characters")
     if (personajes) {
@@ -66,8 +70,12 @@ export const Characters = () => {
             <div className="card border-dark rounded my-3 mx-2 text-bg-dark">
               <img
                 className="card-img-top"
-                src={`https://raw.githubusercontent.com/tbone849/star-wars-guide/master/build/assets/img/characters/${item.uid}.jpg`}
+                src={imageErrors[item.uid] 
+                  ? "https://upload.wikimedia.org/wikipedia/commons/d/da/Imagen_no_disponible.svg"
+                  : `https://raw.githubusercontent.com/tbone849/star-wars-guide/master/build/assets/img/characters/${item.uid}.jpg`
+                }
                 alt={item.name}
+                onError={() => handleImageError(item.uid)}
               />
 
               <div className="card-body">
