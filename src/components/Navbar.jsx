@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import useGlobalReducer from "../hooks/useGlobalReducer"
 
 export const Navbar = () => {
@@ -30,7 +30,7 @@ const handleGoToDetails = (item) => {
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container">
 
-        <a className="navbar-brand" href="/">Star Wars</a>
+        <Link className="navbar-brand" to="/">Star Wars</Link>
 
         <button
           className="navbar-toggler"
@@ -48,13 +48,13 @@ const handleGoToDetails = (item) => {
 
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <a className="nav-link active" href="/characters">Characters</a>
+              <Link className="nav-link active" to="/characters">Characters</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/planets">Planets</a>
+              <Link className="nav-link" to="/planets">Planets</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/starships">Starships</a>
+              <Link className="nav-link" to="/starships">Starships</Link>
             </li>
           </ul>
 
@@ -74,7 +74,7 @@ const handleGoToDetails = (item) => {
   ) : (
     store.favorites.map((item) => (
       <li key={item.uid}>
-        <a className="dropdown-item d-flex justify-content-between" href="#">
+        <div className="dropdown-item d-flex justify-content-between">
           <span onClick={() => handleGoToDetails(item)} style={{cursor: 'pointer'}}>{item.name}</span>
           <button 
             className="btn btn-sm btn-warning ms-3"
@@ -82,7 +82,7 @@ const handleGoToDetails = (item) => {
           >
             X
           </button>
-        </a>
+        </div>
       </li>
     ))
   )}
